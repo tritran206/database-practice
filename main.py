@@ -29,5 +29,15 @@ def todos():
 
     return render_template('todos.html', title="Task-List", tasks=tasks)
 
+@app.route('/delete-task', methods=['POST'])
+def remove_task():
+    task_id = int(request.form['task-id'])
+    task = Tasks.query.get(task_id)
+    db.session.delete(task)
+    db.session.commit()
+
+    return redirect("/")
+
+
 if __name__ == '__main__':
     app.run()
